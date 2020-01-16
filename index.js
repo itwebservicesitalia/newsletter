@@ -6,9 +6,9 @@ const mysql_query = require("./config/db");
 const regexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 const options = {
-  from: '"REX.CH" <rexnewsletter@smtp.sui-inter.net>',
-  subject: "Season’s greetings and best wishes for a successful 2020!",
-  file: "rex14"
+  from: '"REX.CH" <sales@rex.ch>',
+  subject: "swiss plastics, vom 21. bis 23. Januar 2020, Messe Luzern",
+  file: "rex15"
 };
 
 async function asyncForEach(array, callback) {
@@ -20,7 +20,7 @@ async function asyncForEach(array, callback) {
 const sendNewsletter = async () => {
   try {
     const receivers = await mysql_query(
-      "SELECT * FROM emailtest WHERE id BETWEEN 1 AND 2"
+      "SELECT * FROM emailprova WHERE idemail BETWEEN 1 AND 15"
     );
 
     await asyncForEach(receivers, async receiver => {

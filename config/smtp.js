@@ -9,7 +9,10 @@ const transporter = nodemailer.createTransport({
   auth: {
     user: "wed-usa.com@smtp.sui-inter.net",
     pass: "DER85rdRsee"
-  }
+  },
+  pool: true,
+  maxMessages: Infinity,
+  maxConnections: 20
 });
 
 async function sendMail(receiver, options) {
