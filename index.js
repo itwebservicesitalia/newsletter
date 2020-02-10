@@ -22,7 +22,7 @@ async function asyncForEach(array, callback) {
 const sendNewsletter = async () => {
   try {
     const receivers = await mysql_query(
-      "SELECT * FROM email14 WHERE id BETWEEN 5397 AND 6050"
+      "SELECT * FROM emailprova WHERE idemail BETWEEN 1 AND 15"
     );
 
     await asyncForEach(receivers, async receiver => {
