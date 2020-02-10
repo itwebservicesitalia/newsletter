@@ -1,1 +1,1 @@
-# newsletter
+# NodeJS Async newsletter sender
