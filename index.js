@@ -1,3 +1,5 @@
+require("dotenv").config({ path: ".env" });
+
 const colors = require("colors");
 
 const sendMail = require("./config/smtp");
@@ -6,7 +8,7 @@ const mysql_query = require("./config/db");
 const regexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 const options = {
-  from: '"REX.CH" <rexnewsletter@smtp.sui-inter.net>',
+  from: '"REX.CH" <sales@rex.ch>',
   subject: "Season’s greetings and best wishes for a successful 2020!",
   file: "rex14"
 };
@@ -20,7 +22,7 @@ async function asyncForEach(array, callback) {
 const sendNewsletter = async () => {
   try {
     const receivers = await mysql_query(
-      "SELECT * FROM emailtest WHERE id BETWEEN 1 AND 2"
+      "SELECT * FROM email14 WHERE id BETWEEN 5397 AND 6050"
     );
 
     await asyncForEach(receivers, async receiver => {
