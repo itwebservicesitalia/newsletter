@@ -1,0 +1,17 @@
+{
+  "sqltools.connections": [
+    {
+      "mysqlOptions": {
+        "authProtocol": "default"
+      },
+      "previewLimit": 50,
+      "server": "wed-usa.com",
+      "port": 3306,
+      "driver": "MySQL",
+      "name": "Rex newsletter",
+      "database": "rex_newsletter",
+      "username": "rexnewsletter",
+      "password": "Pippo565"
+    }
+  ]
+}
