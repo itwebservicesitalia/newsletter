@@ -16,7 +16,7 @@ const options: MailOptions = {
 
 const sendBulk = async () => {
   const receivers = (await query(
-    "SELECT * FROM email16 WHERE id BETWEEN 1 AND 100"
+    "SELECT * FROM email WHERE id BETWEEN 1 AND 100"
   )) as Receiver[];
 
   const invalidEmails: any[] = [];
