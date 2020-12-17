@@ -11,12 +11,14 @@ import validator from "validator";
 const options: MailOptions = {
   from: '"REX.CH" <sales@rex.ch>',
   subject: "Important information to our customers",
-  template: "rex16",
+  template: "rex17",
 };
+
+const TABLE_NAME = "rex_email17";
 
 const sendBulk = async () => {
   const receivers = (await query(
-    "SELECT * FROM email WHERE id BETWEEN 1 AND 100"
+    `SELECT * FROM ${TABLE_NAME} WHERE id BETWEEN 1 AND 50`
   )) as Receiver[];
 
   const invalidEmails: any[] = [];
@@ -73,13 +75,19 @@ const sendBulk = async () => {
   console.log(`Invalid emails: ${invalidEmails.length}`);
 
   if (invalidEmails.length != 0) {
-    // Delete all emails from invalid_emails
-    await query("DELETE FROM invalid_emails");
+    await query(
+      `CREATE TABLE IF NOT EXISTS invalid_emails (
+        id INT NOT NULL AUTO_INCREMENT, 
+        email TEXT NOT NULL,
+        PRIMARY KEY (id)
+      )`
+    );
 
     // Insert into db invalid emails
-    await query("INSERT INTO invalid_emails (id, email) VALUES ?", [
-      invalidEmails,
-    ]);
+    await query(
+      "INSERT INTO invalid_emails (id, email) VALUES ? ON DUPLICATE KEY UPDATE email=email",
+      [invalidEmails]
+    );
   }
 
   process.exit();
