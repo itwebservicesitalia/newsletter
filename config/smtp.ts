@@ -1,6 +1,7 @@
 import nodemailer from "nodemailer";
 import fs from "fs";
 import Handlebars from "handlebars";
+
 import Mail from "nodemailer/lib/mailer";
 
 const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS } = process.env;
@@ -13,8 +14,8 @@ const transporter = nodemailer.createTransport({
     pass: SMTP_PASS,
   },
   pool: true,
-  maxConnections: 25,
-  maxMessages: 500,
+  maxMessages: 99,
+  maxConnections: 5,
 });
 
 export interface Receiver {
@@ -32,14 +33,19 @@ export const sendMail = async (receiver: Receiver, options: MailOptions) => {
     fs.readFileSync(`templates/${options.template}.hbs`, "utf-8")
   );
 
-  const info = await transporter.sendMail({
-    from: options.from,
-    to: receiver.email,
-    subject: options.subject,
-    html: emailTemplate(receiver),
-  });
+  try {
+    const info = await transporter.sendMail({
+      from: options.from,
+      to: receiver.email,
+      subject: options.subject,
+      html: emailTemplate(receiver),
+    });
 
-  console.log(`ID: ${receiver.id} - ${receiver.email} sent`);
+    console.log(`ID: ${receiver.id} - ${receiver.email} sent`);
 
-  return info;
+    return info;
+  } catch (err) {
+    console.log(`ERROR - ID: ${receiver.id} - ${receiver.email}`);
+    console.log(err);
+  }
 };
